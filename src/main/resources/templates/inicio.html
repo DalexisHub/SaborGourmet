@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio - Sabor Gourmet</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f6fa;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+        }
+
+        footer {
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 shadow-sm">
+    <a class="navbar-brand fw-bold" href="#">🍽️ Sabor Gourmet</a>
+
+    <div class="collapse navbar-collapse"></div>
+
+    <!-- MOSTRAR ROL DEL USUARIO -->
+    <div class="text-white me-3 px-3 py-1 rounded-3"
+         sec:authorize="isAuthenticated()"
+         th:with="rol=${#authentication.authorities[0].authority}">
+        <span th:switch="${rol}">
+
+            <span th:case="'ROLE_ADMIN'" class="bg-primary px-3 py-1 rounded-3">
+                ⭐ Administrador
+            </span>
+
+            <span th:case="'ROLE_MOZO'" class="bg-success px-3 py-1 rounded-3">
+                🧍‍♂️ Mozo
+            </span>
+
+            <span th:case="'ROLE_COCINERO'" class="bg-warning text-dark px-3 py-1 rounded-3">
+                👨‍🍳 Cocinero
+            </span>
+
+            <span th:case="'ROLE_CAJERO'" class="bg-info text-dark px-3 py-1 rounded-3">
+                💵 Cajero
+            </span>
+
+            <span th:case="*" class="bg-secondary px-3 py-1 rounded-3">
+                Rol desconocido
+            </span>
+
+        </span>
+    </div>
+
+    <!-- BOTÓN SALIR -->
+    <a class="btn btn-outline-light" th:href="@{/login}">
+        <i class="bi bi-box-arrow-right"></i> Salir
+    </a>
+</nav>
+
+<!-- HEADER -->
+<div class="container mt-5 text-center">
+    <h1 class="fw-bold mb-3">Bienvenido al Sistema Sabor Gourmet</h1>
+    <p class="text-muted">Gestión profesional para restaurantes - Tecsup</p>
+</div>
+
+<!-- GRID -->
+<div class="container mt-4">
+    <div class="row g-4 justify-content-center">
+
+        <!-- CARD PEDIDOS (MOZO, COCINERO, ADMIN) -->
+        <div class="col-md-4 col-lg-3"
+             sec:authorize="hasAnyRole('MOZO','COCINERO','ADMIN')">
+            <div class="card card-hover shadow-sm text-center p-4">
+                <i class="bi bi-journal-plus fs-1 mb-3"></i>
+                <h5>Pedidos</h5>
+                <a th:href="@{/pedidos}" class="btn btn-primary mt-2">Ingresar</a>
+            </div>
+        </div>
+
+        <!-- CARD MESAS (SOLO ADMIN) -->
+        <div class="col-md-4 col-lg-3"
+             sec:authorize="hasRole('ADMIN')">
+            <div class="card card-hover shadow-sm text-center p-4">
+                <i class="bi bi-grid-3x3-gap-fill fs-1 mb-3"></i>
+                <h5>Mesas</h5>
+                <a th:href="@{/mesas}" class="btn btn-primary mt-2">Ingresar</a>
+            </div>
+        </div>
+
+        <!-- CLIENTES (SOLO ADMIN) -->
+        <div class="col-md-4 col-lg-3"
+             sec:authorize="hasRole('ADMIN')">
+            <div class="card card-hover shadow-sm text-center p-4">
+                <i class="bi bi-people fs-1 mb-3"></i>
+                <h5>Clientes</h5>
+                <a th:href="@{/clientes}" class="btn btn-primary mt-2">Ingresar</a>
+            </div>
+        </div>
+
+        <!-- PLATOS (SOLO ADMIN) -->
+        <div class="col-md-4 col-lg-3"
+             sec:authorize="hasRole('ADMIN')">
+            <div class="card card-hover shadow-sm text-center p-4">
+                <i class="bi bi-archive-fill fs-1 mb-3"></i>
+                <h5>Platos</h5>
+                <a th:href="@{/platos}" class="btn btn-primary mt-2">Ingresar</a>
+            </div>
+        </div>
+
+        <!-- INSUMOS (SOLO ADMIN) -->
+        <div class="col-md-4 col-lg-3"
+             sec:authorize="hasRole('ADMIN')">
+            <div class="card card-hover shadow-sm text-center p-4">
+                <i class="bi bi-box-seam fs-1 mb-3"></i>
+                <h5>Insumos</h5>
+                <a th:href="@{/insumos}" class="btn btn-primary mt-2">Ingresar</a>
+            </div>
+        </div>
+
+        <!-- VENTAS (CAJERO Y ADMIN) -->
+        <div class="col-md-4 col-lg-3"
+             sec:authorize="hasAnyRole('CAJERO','ADMIN')">
+            <div class="card card-hover shadow-sm text-center p-4">
+                <i class="bi bi-cash-coin fs-1 mb-3"></i>
+                <h5>Ventas</h5>
+                <a th:href="@{/ventas}" class="btn btn-primary mt-2">Ingresar</a>
+            </div>
+        </div>
+
+        <!-- INVENTARIO (SOLO ADMIN) -->
+        <div class="col-md-4 col-lg-3"
+             sec:authorize="hasRole('ADMIN')">
+            <div class="card card-hover shadow-sm text-center p-4">
+                <i class="bi bi-boxes fs-1 mb-3"></i>
+                <h5>Inventario</h5>
+                <a th:href="@{/inventario}" class="btn btn-primary mt-2">Ingresar</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="text-center text-muted mt-5 mb-4">
+    © 2025 Sabor Gourmet — Sistema Gastronómico Profesional - Tecsup
+</footer>
+
+</body>
+</html>
