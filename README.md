@@ -121,20 +121,21 @@ El sistema está desarrollado con **Spring Boot 3+**, aplicando **AOP (Programac
 
 ## 📂 Estructura del Proyecto
 
+```text
 src/
 ├─ main/
-│ ├─ java/
-│ │ └─ com/
-│ │ └─ saborgourmet/
-│ │ ├─ controller/
-│ │ ├─ service/
-│ │ ├─ repository/
-│ │ ├─ model/
-│ │ └─ security/
-│ └─ resources/
-│ ├─ templates/
-│ ├─ static/
-│ └─ application.properties
+│  ├─ java/com/saborgourmet/
+│  │  ├─ controller/   # Controladores REST o MVC (Manejo de peticiones HTTP)
+│  │  ├─ service/      # Lógica de negocio y reglas del sistema
+│  │  ├─ repository/   # Capa de acceso a datos (Interfaces JPA/DAO)
+│  │  ├─ model/        # Entidades de base de datos y objetos de dominio (POJOs)
+│  │  └─ security/     # Configuraciones de seguridad (JWT, OAuth2, WebSecurity)
+│  │
+│  └─ resources/
+│     ├─ templates/    # Vistas HTML (Thymeleaf) para el frontend renderizado en servidor
+│     ├─ static/       # Archivos estáticos (CSS, JS, Imágenes)
+│     └─ application.properties # Configuración principal (BBDD, Puerto, etc.)
+│
 └─ test/
 
 ---
